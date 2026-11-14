@@ -16,7 +16,7 @@ int main() {
         std::getline(std::cin, PLAYER_NAME);
     }
     std::cout << std::format("Hello {}!", PLAYER_NAME);
-    std::cout << "Press enter to start..." << std::endl;
+    std::cout << "\nPress enter to start..." << std::endl;
     
     std::getline(std::cin, START);
     IS_RUNNING = true;
