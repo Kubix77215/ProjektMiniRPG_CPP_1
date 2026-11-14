@@ -2,19 +2,20 @@
 #include <string>
 class Entity { // klasa glownych stworzen zawiera klase attack i statystyki oraz statusy
     private:
+        //-------ZMIENNE------
         int hp = 10;
         std::string name;
         bool isAlive = true;
-    public:
-        //-------SETTERY-------
+        //------SETTERY------
+        void setHP(int newValue) {
+            if (newValue <= 0) {
+                std::cout << "Deafult HP can't be negative." << std::endl;
+                return;
+            }
+            this->hp = newValue;
+        }
         void setName(std::string newName) {
             this->name = newName;
-        }
-        void setHP(int newHP) {
-            if (newHP <= 0) {
-                std::cout << "Deafult HP can't be negative." << std::endl;
-            }
-            this->hp = newHP;
         }
         void setIsAlive(bool alive) {
             try {
@@ -25,6 +26,18 @@ class Entity { // klasa glownych stworzen zawiera klase attack i statystyki oraz
                 std::cout << "Error message" << e << std::endl;
                 return;
             }
+        }
+    public:
+        //-------SETTERY-------
+        void setStats(std::string Name, int HP) {
+            this->setHP(HP);
+            this->setName(Name);
+        }
+        void changeHP(int newValue) {
+            setHP(newValue);
+        }
+        void changeIsAlive(bool alive) {
+            setIsAlive(alive);
         }
         //-------GETTERY--------
         const std::string getName() {
@@ -70,28 +83,23 @@ class Attack {
 
             
             if (VICTIM_HP <= 0) {
-                Victim.setIsAlive(false);
+                Victim.changeIsAlive(false);
                 std::cout << VICTIM_NAME << " has died" << std::endl;
                 return;
             }
             else {
                 std::cout << ATTACKER_NAME << " attacked: " << VICTIM_NAME << " for: " << DAMAGE << " new health: " << VICTIM_HP << std::endl;
-                Victim.setHP(VICTIM_HP);
+                Victim.changeHP(VICTIM_HP);
             }
             
         }
 };
 int main() {
+    bool IS_RUNNING = true;
     Player gracz;
-    gracz.setHP(10);
-    gracz.setName("test");
+    gracz.setStats("test", 20);
 
     mob zombie;
-    zombie.setHP(5);
-    zombie.setName("zombie");
+    zombie.setStats("zombie", 10);
 
-    Attack PvPSystem;
-    for(int i = 0;i<6;i++) {
-        PvPSystem.Simple(gracz, zombie);
-    }
 }
